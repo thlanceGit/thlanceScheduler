@@ -15,9 +15,8 @@ function showMomentTimer () {
     currentDay.text(now);
 }
 
-var timeCondition = Array(8);
+var timeConditionArr = [];
 setInterval ( function setTimeConditions () {
-    var timeConditionArr = [...Array(8)].map((_, i) => i);
     if ( time >= '09:00:00' && time <= '10:00:00' ) { //9 am time block
         timeConditionArr[0] = 'present';
     } else if ( time >= '10:00:00') {
@@ -81,7 +80,6 @@ setInterval ( function setTimeConditions () {
     } else if ( time <= '17:00:00') {
         timeConditionArr[8] = 'future';
     }
-    console.log(timeConditionArr);
 }, 1000);
 
 
@@ -104,12 +102,10 @@ var schedBody = $('<tbody>');
 for (let i = 0; i < 9; i++) {
     var listItem = $("<tr>");
     listItem.attr('class', 'time-block');
-    listItem.attr('name', i);
     var timeDispEl = $('<td class="hour">');
     timeDispEl.text(schedTimes[i]);
     var textContainer = $('<td>');
     var textBox = $('<textarea class="description" placeholder:"Task description here">');
-    textBox.attr('name', schedTimes[i]);
     var saveBox = $('<td>');
     var saveBtn = $('<i class="far fa-save"></i>')
     saveBtn.attr('bttnName', schedTimes[i] + " button")
@@ -125,154 +121,23 @@ for (let i = 0; i < 9; i++) {
 schedList.append(schedBody);
 container.append(schedList);
 
-/*setInterval(
-    $.each($(".time-block"), function classifySchedule () {
+setInterval(function classifySchedule () {
         for (let j = 0; j < 9; j++) {
-            index = j+1;
-            var condition = timeCondition[index];
-            console.log(condition);
-            if ( condition == 'past' ) {
-                $(this).addClass("past");
-                $(this).removeClass("present");
-                $(this).removeClass("future");
-            } else if ( condition == 'present' ) {
-                $(this).addClass("present");
-                $(this).removeClass("past");
-                $(this).removeClass("future");
-            } else if ( condition == 'future' ) {
-                $(this).addClass("future");
-                $(this).removeClass("present");
-                $(this).removeClass("past");
+            if ( timeConditionArr[j] == 'past' ) {
+                $("tbody tr:nth-child("+ (j + 1) +")").addClass("past");
+                $("tbody tr:nth-child("+ (j + 1) +")").removeClass("present");
+                $("tbody tr:nth-child("+ (j + 1) +")").removeClass("future");
+            } else if ( timeConditionArr[j] == 'present' ) {
+                $("tbody tr:nth-child("+ (j + 1) +")").addClass("present");
+                $("tbody tr:nth-child("+ (j + 1) +")").removeClass("past");
+                $("tbody tr:nth-child("+ (j + 1) +")").removeClass("future");
+            } else if ( timeConditionArr[j] == 'future' ) {
+                $("tbody tr:nth-child("+ (j + 1) +")").addClass("future");
+                $("tbody tr:nth-child("+ (j + 1) +")").removeClass("present");
+                $("tbody tr:nth-child("+ (j + 1) +")").removeClass("past");
             }
         }
-    }), 1000);*/
-
-
-
-//TODO: IF loop(s) change class attribute to past/future depending on condition
-//item depending on what time it is
-setInterval (function classifySchedule () {
-for (let i = 0; i < 9; i++) {
-    if ( timeCondition[i] == 'past' ) {
-        $("tbody tr:nth-child(1)").addClass("past");
-        $("tbody tr:nth-child(1)").removeClass("present");
-        $("tbody tr:nth-child(1)").removeClass("future");
-    } else if ( timeCondition[i] == "present" ) {
-        $("tbody tr:nth-child(1)").addClass("present");
-        $("tbody tr:nth-child(1)").removeClass("past");
-        $("tbody tr:nth-child(1)").removeClass("future");
-    } else if ( timeCondition[i] == "future" ) {
-        $("tbody tr:nth-child(1)").addClass("future");
-        $("tbody tr:nth-child(1)").removeClass("present");
-        $("tbody tr:nth-child(1)").removeClass("past");
-    }
-}
-    if ( timeCondition[1] == 'past' ) {
-        $('tbody tr:nth-child(2)').addClass('past');
-        $('tbody tr:nth-child(2)').removeClass('present');
-        $('tbody tr:nth-child(2)').removeClass('future');
-    } else if ( timeCondition[1] == 'present' ) {
-        $('tbody tr:nth-child(2)').addClass('present');
-        $('tbody tr:nth-child(2)').removeClass('past');
-        $('tbody tr:nth-child(2)').removeClass('future');
-    } else if ( timeCondition[1] == 'future' ) {
-        $('tbody tr:nth-child(2)').addClass('future');
-        $('tbody tr:nth-child(2)').removeClass('present');
-        $('tbody tr:nth-child(2)').removeClass('past');
-    }
-    if ( timeCondition[2] == 'past' ) {
-        $('tbody tr:nth-child(3)').addClass('past');
-        $('tbody tr:nth-child(3)').removeClass('present');
-        $('tbody tr:nth-child(3)').removeClass('future');
-    } else if ( timeCondition[2] == 'present' ) {
-        $('tbody tr:nth-child(3)').addClass('present');
-        $('tbody tr:nth-child(3)').removeClass('past');
-        $('tbody tr:nth-child(3)').removeClass('future');
-    } else if ( timeCondition[2] == 'future' ) {
-        $('tbody tr:nth-child(3)').addClass('future');
-        $('tbody tr:nth-child(3)').removeClass('present');
-        $('tbody tr:nth-child(3)').removeClass('past');
-    }
-    if ( timeCondition[3] == 'past' ) {
-        $('tbody tr:nth-child(4)').addClass('past');
-        $('tbody tr:nth-child(4)').removeClass('present');
-        $('tbody tr:nth-child(4)').removeClass('future');
-    } else if ( timeCondition[3] == 'present' ) {
-        $('tbody tr:nth-child(4)').addClass('present');
-        $('tbody tr:nth-child(4)').removeClass('past');
-        $('tbody tr:nth-child(4)').removeClass('future');
-    } else if ( timeCondition[3] == 'future' ) {
-        $('tbody tr:nth-child(4)').addClass('future');
-        $('tbody tr:nth-child(4)').removeClass('present');
-        $('tbody tr:nth-child(4)').removeClass('past');
-    }
-    if ( timeCondition[4] == 'past' ) {
-        $('tbody tr:nth-child(5)').addClass('past');
-        $('tbody tr:nth-child(5)').removeClass('present');
-        $('tbody tr:nth-child(5)').removeClass('future');
-    } else if ( timeCondition[4] == 'present' ) {
-        $('tbody tr:nth-child(5)').addClass('present');
-        $('tbody tr:nth-child(5)').removeClass('past');
-        $('tbody tr:nth-child(5)').removeClass('future');
-    } else if ( timeCondition[4] == 'future' ) {
-        $('tbody tr:nth-child(5)').addClass('future');
-        $('tbody tr:nth-child(5)').removeClass('present');
-        $('tbody tr:nth-child(5)').removeClass('past');
-    }
-    if ( timeCondition[5] == 'past' ) {
-        $('tbody tr:nth-child(6)').addClass('past');
-        $('tbody tr:nth-child(6)').removeClass('present');
-        $('tbody tr:nth-child(6)').removeClass('future');
-    } else if ( timeCondition[5] == 'present' ) {
-        $('tbody tr:nth-child(6)').addClass('present');
-        $('tbody tr:nth-child(6)').removeClass('past');
-        $('tbody tr:nth-child(6)').removeClass('future');
-    } else if ( timeCondition[5] == 'future' ) {
-        $('tbody tr:nth-child(6)').addClass('future');
-        $('tbody tr:nth-child(6)').removeClass('present');
-        $('tbody tr:nth-child(6)').removeClass('past');
-    }
-    if ( timeCondition[6] == 'past' ) {
-        $('tbody tr:nth-child(7)').addClass('past');
-        $('tbody tr:nth-child(7)').removeClass('present');
-        $('tbody tr:nth-child(7)').removeClass('future');
-    } else if ( timeCondition[6] == 'present' ) {
-        $('tbody tr:nth-child(7)').addClass('present');
-        $('tbody tr:nth-child(7)').removeClass('past');
-        $('tbody tr:nth-child(7)').removeClass('future');
-    } else if ( timeCondition[6] == 'future' ) {
-        $('tbody tr:nth-child(7)').addClass('future');
-        $('tbody tr:nth-child(7)').removeClass('present');
-        $('tbody tr:nth-child(7)').removeClass('past');
-    }
-    if ( timeCondition[7] == 'past' ) {
-        $('tbody tr:nth-child(8)').addClass('past');
-        $('tbody tr:nth-child(8)').removeClass('present');
-        $('tbody tr:nth-child(8)').removeClass('future');
-    } else if ( timeCondition[7] == 'present' ) {
-        $('tbody tr:nth-child(8)').addClass('present');
-        $('tbody tr:nth-child(8)').removeClass('past');
-        $('tbody tr:nth-child(8)').removeClass('future');
-    } else if ( timeCondition[7] == 'future' ) {
-        $('tbody tr:nth-child(8)').addClass('future');
-        $('tbody tr:nth-child(8)').removeClass('present');
-        $('tbody tr:nth-child(8)').removeClass('past');
-    }
-    if ( timeCondition[8] == 'past' ) {
-        $('tbody tr:nth-child(9)').addClass('past');
-        $('tbody tr:nth-child(9)').removeClass('present');
-        $('tbody tr:nth-child(9)').removeClass('future');
-    } else if ( timeCondition[8] == 'present' ) {
-        $('tbody tr:nth-child(9)').addClass('present');
-        $('tbody tr:nth-child(9)').removeClass('past');
-        $('tbody tr:nth-child(9)').removeClass('future');
-    } else if ( timeCondition[8] == 'future' ) {
-        $('tbody tr:nth-child(9)').addClass('future');
-        $('tbody tr:nth-child(9)').removeClass('present');
-        $('tbody tr:nth-child(9)').removeClass('past');
-    }
-},1500);
-
+    }, 1000);
 
 /*********Handling textarea and saving*********/
 //TODO: Get textBox input when saveBox is clicked and save text
