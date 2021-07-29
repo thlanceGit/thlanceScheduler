@@ -15,7 +15,7 @@ function showMomentTimer () {
     currentDay.text(now);
 }
 
-var timeCondition = Array(8).map((_, i) => i);
+var timeCondition = Array(8);
 setInterval ( function setTimeConditions () {
     var timeConditionArr = [...Array(8)].map((_, i) => i);
     if ( time >= '09:00:00' && time <= '10:00:00' ) { //9 am time block
@@ -81,8 +81,7 @@ setInterval ( function setTimeConditions () {
     } else if ( time <= '17:00:00') {
         timeConditionArr[8] = 'future';
     }
-    console.log(timeCondition);
-     timeConditionArr;
+    console.log(timeConditionArr);
 }, 1000);
 
 
