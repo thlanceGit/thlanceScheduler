@@ -3,7 +3,7 @@ var currentDay = $('#currentDay');
 var showtimer = setInterval(showMomentTimer,1000);
 var time = setInterval(getTime,1000);
 const schedTimeFormat = 'HH:mm:ss';
-const schedTimes = ['9 am', '10 am', '11 am', '12 pm', '1 pm', '2 pm', '3 pm', '4 pm', '5 pm'];
+
 
 /*********Getting moment timers and setting conditions*********/
 function getTime () {
@@ -84,65 +84,54 @@ setInterval ( function setTimeConditions () {
 
 
 /*********Constructing the schedule and classifying based on time condition*********/
-var schedList = $('<table>');
-var schedHeader = $('<thead>');
-var schedHead1 = $('<th>Time</th>');
-var schedHead2 = $('<th>Task Description</th>');
-var schedHead3 = $('<th>Save Task</th>');
+//Testing Bootstrap div classification of rows and columns instead of table
+const schedTimes = ['9 am', '10 am', '11 am', '12 pm', '1 pm', '2 pm', '3 pm', '4 pm', '5 pm'];
+var schedList = $('<div class="container" id="schedList">');
+var schedHeader = $('<div class="row">');
+var schedHead1 = $('<div class="col">Time</div>');
+var schedHead2 = $('<div class="col">Task Description</div>');
+var schedHead3 = $('<div class="col">Save Task</div>');
 schedHeader.append(schedHead1);
 schedHeader.append(schedHead2);
 schedHeader.append(schedHead3);
 schedList.append(schedHeader);
-var schedBody = $('<tbody>');
+
 
 for (let i = 0; i < 9; i++) {
-    var listItem = $('<tr class="time-block"></tr>');
-    var timeDispEl = $('<td class="hour">'+schedTimes[i]+'</td>');
-    var textContainer = $('<td></td>');
-    var textBox = $('<textarea class="description" placeholder="Task description here" name="textarea '+schedTimes[i]+'"></textarea>');
-    textBox.text(localStorage.getItem('task '+schedTimes[i]+''));
-    var saveBox = $('<td class="saveBtn"></td>');
-    var saveBtn = $('<i class="button far fa-save" type="button" id="'+schedTimes[i]+'"></i>')
+    var listItem = $('<div class="row" name="Timeblock '+schedTimes[i]+'">');
+    var timeDispEl = $('<div class="col">'+schedTimes[i]+'</div>');
+    var textContainer = $('<div class="col time-block"></div>');
+    var textBox = $('<textarea class="description" placeholder="Task description here"></textarea>');
+    var saveBox = $('<div class="col saveBtn"></div>');
+    var saveBtn = $('<i class="far fa-save" bttnName="'+schedTimes[i]+' button"></i>');
     
     saveBox.append(saveBtn);
     listItem.append(timeDispEl);
     textContainer.append(textBox);
     listItem.append(textContainer);
     listItem.append(saveBox);
-    schedBody.append(listItem);
+    schedList.append(listItem);
 }
 
-schedList.append(schedBody);
 container.append(schedList);
 
 setInterval(function classifySchedule () {
         for (let j = 0; j < 9; j++) {
             if ( timeConditionArr[j] == 'past' ) {
-                $("tbody tr:nth-child("+ (j + 1) +")").addClass("past");
-                $("tbody tr:nth-child("+ (j + 1) +")").removeClass("present");
-                $("tbody tr:nth-child("+ (j + 1) +")").removeClass("future");
+                $( "div[name*='Timeblock "+schedTimes[j]+"']" ).addClass("past");
+                $( "div[name*='Timeblock "+schedTimes[j]+"']" ).removeClass("present");
+                $( "div[name*='Timeblock "+schedTimes[j]+"']" ).removeClass("future");
             } else if ( timeConditionArr[j] == 'present' ) {
-                $("tbody tr:nth-child("+ (j + 1) +")").addClass("present");
-                $("tbody tr:nth-child("+ (j + 1) +")").removeClass("past");
-                $("tbody tr:nth-child("+ (j + 1) +")").removeClass("future");
+                $( "div[name*='Timeblock "+schedTimes[j]+"']" ).addClass("present");
+                $( "div[name*='Timeblock "+schedTimes[j]+"']" ).removeClass("past");
+                $( "div[name*='Timeblock "+schedTimes[j]+"']" ).removeClass("future");
             } else if ( timeConditionArr[j] == 'future' ) {
-                $("tbody tr:nth-child("+ (j + 1) +")").addClass("future");
-                $("tbody tr:nth-child("+ (j + 1) +")").removeClass("present");
-                $("tbody tr:nth-child("+ (j + 1) +")").removeClass("past");
+                $( "div[name*='Timeblock "+schedTimes[j]+"']" ).addClass("future");
+                $( "div[name*='Timeblock "+schedTimes[j]+"']" ).removeClass("present");
+                $( "div[name*='Timeblock "+schedTimes[j]+"']" ).removeClass("past");
             }
         }
     }, 1000);
 
 /*********Handling textarea and saving*********/
 //TODO: Get textBox input when saveBox is clicked and save text
-$(".button").click( function fillTextarea (e) {
-
-    var targetButton = $(e.target);
-    buttonID = targetButton.attr("id");
-    console.log("Button ID: "+buttonID+" clicked");
-    var targetTextArea = $("textarea[name*='"+buttonID+"']").val();
-    localStorage.setItem("task "+buttonID+"", targetTextArea); 
-    console.log('Save button '+buttonID+' clicked');
-
-});
-

@@ -10,8 +10,7 @@ textarea {
   resize: none;
   color: #000000;
   border-left: 1px solid black;
-  padding: .3em;
-  width: 100%
+  padding: 10px;
 }
 
 .jumbotron {
@@ -22,31 +21,25 @@ textarea {
   border-bottom: 10px solid black;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  margin-top: 1rem;
-  width: 80%;
-}
-
 .description {
   white-space: pre-wrap;
-  height: 3rem;
-  border-top: 1px solid white;
 }
 
 .time-block {
   text-align: center;
   border-radius: 15px;
-  white-space: pre-wrap;
-
 }
 
+.row {
+  white-space: pre-wrap;
+  height: 80px;
+  border-top: 1px solid white;
+}
 
 .hour {
   background-color: #ffffff;
   color: #000000;
-  border-top: .1em dashed #000000;
+  border-top: 1px dashed #000000;
 }
 
 .past {
@@ -65,25 +58,14 @@ textarea {
 }
 
 .saveBtn {
-  border-left: .12em solid black;
-  border-top: .1em solid white;
-  border-top-right-radius: 1em;
-  border-bottom-right-radius: 1em;
+  border-left: 1px solid black;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
   background-color: #06aed5;
   color: white;
 }
 
 .saveBtn i:hover {
-  font-size: 2em;
+  font-size: 20px;
   transition: all 0.3s ease-in-out;
-}
-
-#schedList {
-  list-style: none;
-}
-
-thead > th {
-  border: .1em solid black;
-  border-bottom: .3em solid black;
-  text-align: center;
 }
